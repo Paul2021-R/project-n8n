@@ -1,0 +1,11 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n_ai_content_generator
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+    volumes:
+      - ${DATA_FOLDER}:/home/node/.n8n
