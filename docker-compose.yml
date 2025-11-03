@@ -1,11 +1,19 @@
 services:
   n8n:
     image: n8nio/n8n:latest
-    container_name: n8n_ai_content_generator
+    container_name: n8n-server
     restart: unless-stopped
-    ports:
-      - "5678:5678"
+    # ports:
+    #   - "5678:5678"
     environment:
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+      - N8N_SECURE_COOKIE=false # 1. HTTPS가 아니어도 쿠키 사용 허용
+      - WEBHOOK_URL=http://ryu93-n8n.duckdns.org/ # 2. n8n의 공개 주소 설정
     volumes:
       - ${DATA_FOLDER}:/home/node/.n8n
+    networks:
+      - my-central-proxy-network
+
+networks:
+  my-central-proxy-network:
+    external: true
